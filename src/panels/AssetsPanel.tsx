@@ -66,7 +66,7 @@ export function AssetsPanel() {
           </div>
         )}
       </div>
-      <div className="px-2 py-1 border-t border-border-primary text-[10px] text-text-muted">
+      <div className="px-2 py-1 border-t border-border-primary text-[10px] text-text-muted flex-shrink-0">
         {assets.length} assets
       </div>
     </div>

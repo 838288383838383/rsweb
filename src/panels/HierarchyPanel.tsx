@@ -162,7 +162,7 @@ export function HierarchyPanel() {
           )
         )}
       </div>
-      <div className="px-2 py-1 border-t border-border-primary text-[11px] text-text-muted">
+      <div className="px-2 py-1 border-t border-border-primary text-[11px] text-text-muted flex-shrink-0">
         {instances.size} instances
       </div>
     </div>

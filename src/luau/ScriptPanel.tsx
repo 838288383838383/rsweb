@@ -196,7 +196,7 @@ export function ScriptPanel() {
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center gap-1 px-2 py-1 border-b border-border-primary">
+      <div className="flex items-center gap-1 px-2 py-1 border-b border-border-primary flex-shrink-0">
         <button
           onClick={executeScript}
           className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] ${
