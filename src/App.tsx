@@ -4,7 +4,9 @@ import { EditorLayout } from './panels/EditorLayout';
 export default function App() {
   return (
     <ThemeProvider>
-      <EditorLayout />
+      <div className="w-full h-full flex flex-col min-h-0">
+        <EditorLayout />
+      </div>
     </ThemeProvider>
   );
 }

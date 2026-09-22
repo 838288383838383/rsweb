@@ -50,7 +50,7 @@ export function FileDropZone({ children }: { children: React.ReactNode }) {
 
   return (
     <div
-      className="w-full h-full relative"
+      className="w-full h-full min-h-0 flex-1 flex flex-col relative overflow-hidden"
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}

@@ -250,13 +250,13 @@ export function InspectorPanel() {
 
   if (!selectedInstance) {
     return (
-      <div className="h-full flex flex-col bg-bg-secondary">
+      <div className="h-full min-h-0 flex flex-col bg-bg-secondary overflow-hidden">
         <div className="px-2 py-1 border-b border-border-primary">
           <div className="text-[11px] font-semibold text-text-secondary uppercase tracking-wide">
             Properties
           </div>
         </div>
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 min-h-0 flex items-center justify-center">
           <div className="text-[12px] text-text-muted">No selection</div>
         </div>
       </div>
@@ -283,7 +283,7 @@ export function InspectorPanel() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-bg-secondary">
+    <div className="h-full min-h-0 flex flex-col bg-bg-secondary overflow-hidden">
       <div className="px-2 py-1 border-b border-border-primary">
         <div className="text-[11px] font-semibold text-text-secondary uppercase tracking-wide">
           Properties

@@ -162,7 +162,7 @@ export function ScriptPanel() {
   }, []);
 
   return (
-    <div className="h-full flex flex-col bg-bg-secondary">
+    <div className="h-full min-h-0 flex flex-col bg-bg-secondary overflow-hidden">
       <div className="px-2 py-1 border-b border-border-primary flex items-center gap-2">
         <FileCode size={12} className="text-text-secondary" />
         <span className="text-[11px] font-semibold text-text-secondary uppercase tracking-wide">
@@ -229,7 +229,7 @@ export function ScriptPanel() {
       </div>
 
       {/* Editor */}
-      <div className="flex-1 min-h-0">
+      <div className="flex-1 min-h-0 overflow-hidden">
         <ScriptEditor
           value={activeScript.source}
           onChange={handleSourceChange}
@@ -237,7 +237,7 @@ export function ScriptPanel() {
       </div>
 
       {/* Output */}
-      <div className="h-[100px] border-t border-border-primary overflow-y-auto font-mono text-[11px]">
+      <div className="h-[100px] flex-shrink-0 border-t border-border-primary overflow-y-auto font-mono text-[11px]">
         {output.length === 0 ? (
           <div className="p-2 text-text-muted">Output appears here when you run the script</div>
         ) : (

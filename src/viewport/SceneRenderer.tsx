@@ -71,7 +71,7 @@ export function SceneRenderer() {
   const { theme } = useEditorStore();
 
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full min-h-0 relative overflow-hidden">
       <Canvas
         shadows
         camera={{ position: [15, 15, 15], fov: 50, near: 0.1, far: 1000 }}
@@ -80,7 +80,11 @@ export function SceneRenderer() {
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1,
         }}
-        style={{ background: theme === 'dark' ? '#1a1a2e' : '#d4d4d4' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          background: theme === 'dark' ? '#1a1a2e' : '#d4d4d4',
+        }}
       >
         <ambientLight intensity={0.5} />
         <directionalLight

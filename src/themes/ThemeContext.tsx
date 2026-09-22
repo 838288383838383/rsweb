@@ -24,7 +24,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+      <div className="w-full h-full flex flex-col min-h-0">
+        {children}
+      </div>
     </ThemeContext.Provider>
   );
 }

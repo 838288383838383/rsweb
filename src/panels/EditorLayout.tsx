@@ -57,7 +57,6 @@ export function EditorLayout() {
           redo();
         } else if (e.key === 's') {
           e.preventDefault();
-          // Trigger save via toolbar
         }
         return;
       }
@@ -87,17 +86,17 @@ export function EditorLayout() {
 
   if (layoutMode === 'classic-2015') {
     return (
-      <div className="w-full h-full flex flex-col">
+      <div className="w-full h-full flex flex-col min-h-0">
         <Toolbar />
         <FileDropZone>
-          <div className="flex-1 flex">
-            <div className="w-[250px] border-r border-border-primary">
+          <div className="flex-1 flex min-h-0 overflow-hidden">
+            <div className="w-[250px] border-r border-border-primary flex-shrink-0 overflow-hidden">
               <HierarchyPanel />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 min-w-0 overflow-hidden">
               <SceneRenderer />
             </div>
-            <div className="w-[280px] border-l border-border-primary">
+            <div className="w-[280px] border-l border-border-primary flex-shrink-0 overflow-hidden">
               <InspectorPanel />
             </div>
           </div>
@@ -109,34 +108,32 @@ export function EditorLayout() {
 
   if (layoutMode === 'classic-2026') {
     return (
-      <div className="w-full h-full flex flex-col">
+      <div className="w-full h-full flex flex-col min-h-0">
         <Toolbar />
         <FileDropZone>
-          <div className="flex-1 flex">
-            <div className="w-[240px] border-r border-border-primary flex flex-col">
-              <div className="flex-1">
+          <div className="flex-1 flex min-h-0 overflow-hidden">
+            <div className="w-[240px] border-r border-border-primary flex flex-col flex-shrink-0 overflow-hidden">
+              <div className="flex-1 min-h-0 overflow-hidden">
                 <HierarchyPanel />
               </div>
-              <div className="h-[200px] border-t border-border-primary">
+              <div className="h-[200px] border-t border-border-primary flex-shrink-0 overflow-hidden">
                 <AssetsPanel />
               </div>
             </div>
-            <div className="flex-1 flex flex-col">
-              <div className="flex-1 flex">
-                <div className="flex-1">
-                  <SceneRenderer />
-                </div>
+            <div className="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
+              <div className="flex-1 min-h-0 overflow-hidden">
+                <SceneRenderer />
               </div>
-              <div className="h-[300px] border-t border-border-primary flex">
-                <div className="flex-1 border-r border-border-primary">
+              <div className="h-[300px] border-t border-border-primary flex flex-shrink-0 overflow-hidden">
+                <div className="flex-1 min-w-0 border-r border-border-primary overflow-hidden">
                   <ScriptPanel />
                 </div>
-                <div className="w-[300px]">
+                <div className="w-[300px] flex-shrink-0 overflow-hidden">
                   <ConsolePanel />
                 </div>
               </div>
             </div>
-            <div className="w-[280px] border-l border-border-primary">
+            <div className="w-[280px] border-l border-border-primary flex-shrink-0 overflow-hidden">
               <InspectorPanel />
             </div>
           </div>
@@ -148,31 +145,31 @@ export function EditorLayout() {
 
   // VS Code layout
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col min-h-0">
       <Toolbar />
       <FileDropZone>
-        <div className="flex-1">
+        <div className="flex-1 min-h-0 overflow-hidden">
           <Allotment>
             <Allotment.Pane minSize={200}>
               <div className="h-full flex flex-col">
-                <div className="flex-1">
+                <div className="flex-1 min-h-0 overflow-hidden">
                   <HierarchyPanel />
                 </div>
-                <div className="h-[200px] border-t border-border-primary">
+                <div className="h-[200px] border-t border-border-primary flex-shrink-0 overflow-hidden">
                   <AssetsPanel />
                 </div>
               </div>
             </Allotment.Pane>
             <Allotment.Pane minSize={300}>
               <div className="h-full flex flex-col">
-                <div className="flex-1">
+                <div className="flex-1 min-h-0 overflow-hidden">
                   <SceneRenderer />
                 </div>
-                <div className="h-[300px] border-t border-border-primary flex">
-                  <div className="flex-1 border-r border-border-primary">
+                <div className="h-[300px] border-t border-border-primary flex flex-shrink-0 overflow-hidden">
+                  <div className="flex-1 min-w-0 border-r border-border-primary overflow-hidden">
                     <ScriptPanel />
                   </div>
-                  <div className="w-[300px]">
+                  <div className="w-[300px] flex-shrink-0 overflow-hidden">
                     <ConsolePanel />
                   </div>
                 </div>

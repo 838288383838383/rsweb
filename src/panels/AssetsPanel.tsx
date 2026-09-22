@@ -27,7 +27,7 @@ export function AssetsPanel() {
     : [];
 
   return (
-    <div className="h-full flex flex-col bg-bg-secondary">
+    <div className="h-full min-h-0 flex flex-col bg-bg-secondary overflow-hidden">
       <div className="px-2 py-1 border-b border-border-primary">
         <div className="text-[11px] font-semibold text-text-secondary uppercase tracking-wide">
           Assets

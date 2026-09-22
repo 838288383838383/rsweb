@@ -19,7 +19,7 @@ export function ConsolePanel() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-bg-secondary">
+    <div className="h-full min-h-0 flex flex-col bg-bg-secondary overflow-hidden">
       <div className="px-2 py-1 border-b border-border-primary flex items-center justify-between">
         <div className="flex items-center gap-1">
           <Terminal size={12} className="text-text-secondary" />
