@@ -5,6 +5,8 @@ export const ServicesShim = `
 local RunService = {
   _heartbeatCallbacks = {},
   _renderCallbacks = {},
+  Heartbeat = {},
+  RenderStepped = {},
 }
 
 function RunService.Heartbeat:Connect(fn)
@@ -45,6 +47,7 @@ end
 
 local UserInputService = {
   _inputCallbacks = {},
+  InputBegan = {},
 }
 
 function UserInputService.InputBegan:Connect(fn)

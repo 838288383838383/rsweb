@@ -245,7 +245,10 @@ function Instance.new(className)
       if key == "Name" then return rawget(self, "Name") end
       if key == "ClassName" then return rawget(self, "ClassName") end
       if key == "Children" then return rawget(self, "Children") end
-      return rawget(self, "Properties")[key]
+      local props = rawget(self, "Properties")
+      local prop = props[key]
+      if prop ~= nil then return prop end
+      return Instance[key]
     end,
     __newindex = function(self, key, value)
       if key == "Parent" then
