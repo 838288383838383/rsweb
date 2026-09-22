@@ -24,6 +24,7 @@
     "allotment": "^1.20.5",
     "codemirror": "^6.0.2",
     "idb-keyval": "^6.3.0",
+    "luau-web": "^1.4.0",
     "lucide-react": "^1.47.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
