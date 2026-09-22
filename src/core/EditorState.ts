@@ -45,6 +45,7 @@ interface EditorState {
   setScriptMode: (mode: ScriptMode) => void;
   addInstance: (className: InstanceClassName, parentId: string, name?: string) => string | null;
   removeInstance: (id: string) => void;
+  importInstances: (instances: InstanceData[], parentId: string) => void;
   setProperty: (instanceId: string, propertyName: string, value: import('../types/Property').PropertyValue) => void;
   renameInstance: (id: string, newName: string) => void;
   undo: () => void;
@@ -151,6 +152,39 @@ export const useEditorStore = create<EditorState>((set, get) => {
         instances: new Map(s.instances),
         selectedIds: s.selectedIds.filter((i) => i !== id),
       }));
+    },
+
+    importInstances: (importedInstances, parentId) => {
+      const state = get();
+      const newInstances = new Map(state.instances);
+
+      // Find root instances (no parent in the imported set)
+      const importedIds = new Set(importedInstances.map(i => i.id));
+      const rootInstances = importedInstances.filter(i => !i.parent || !importedIds.has(i.parent));
+
+      for (const inst of importedInstances) {
+        // Update parent references if parent is in the imported set
+        if (inst.parent && importedIds.has(inst.parent)) {
+          // Parent is in imported set, keep as-is
+        } else if (inst.parent === null) {
+          // Root instance, parent to target
+          inst.parent = parentId;
+        }
+
+        newInstances.set(inst.id, inst);
+      }
+
+      // Add root instances to parent's children
+      const parent = newInstances.get(parentId);
+      if (parent) {
+        for (const root of rootInstances) {
+          if (!parent.children.includes(root.id)) {
+            parent.children = [...parent.children, root.id];
+          }
+        }
+      }
+
+      set({ instances: newInstances });
     },
 
     setProperty: (instanceId, propertyName, value: import('../types/Property').PropertyValue) => {

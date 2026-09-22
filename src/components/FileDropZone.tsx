@@ -1,9 +1,10 @@
 import { useCallback, useState } from 'react';
 import { useEditorStore } from '../core/EditorState';
+import { importFile, getFormatLabel, type ImportFormat } from '../importers/ImportManager';
 
 export function FileDropZone({ children }: { children: React.ReactNode }) {
   const [isDragging, setIsDragging] = useState(false);
-  const { addConsoleOutput } = useEditorStore();
+  const { addConsoleOutput, importInstances } = useEditorStore();
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -17,6 +18,24 @@ export function FileDropZone({ children }: { children: React.ReactNode }) {
     setIsDragging(false);
   }, []);
 
+  const processFiles = useCallback(
+    async (files: File[]) => {
+      for (const file of files) {
+        try {
+          addConsoleOutput('log', `Importing ${file.name}...`);
+          const result = await importFile(file);
+          const label = getFormatLabel(result.format);
+          addConsoleOutput('log', `Imported ${result.instances.length} instances from ${label}: ${file.name}`);
+          importInstances(result.instances, 'workspace');
+          addConsoleOutput('log', `Added to Workspace successfully.`);
+        } catch (error) {
+          addConsoleOutput('error', `Failed to import ${file.name}: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
+      }
+    },
+    [addConsoleOutput, importInstances]
+  );
+
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
       e.preventDefault();
@@ -24,16 +43,9 @@ export function FileDropZone({ children }: { children: React.ReactNode }) {
       setIsDragging(false);
 
       const files = Array.from(e.dataTransfer.files);
-      for (const file of files) {
-        const ext = file.name.split('.').pop()?.toLowerCase();
-        if (['rbxm', 'rbxl', 'rbxmx', 'rbxlx', 'glb', 'gltf', 'obj', 'fbx'].includes(ext || '')) {
-          addConsoleOutput('log', `Imported: ${file.name}`);
-        } else {
-          addConsoleOutput('warn', `Unsupported file type: .${ext}`);
-        }
-      }
+      processFiles(files);
     },
-    [addConsoleOutput]
+    [processFiles]
   );
 
   return (
@@ -51,7 +63,7 @@ export function FileDropZone({ children }: { children: React.ReactNode }) {
               Drop files to import
             </div>
             <div className="text-[11px] text-text-muted">
-              Supports .rbxm, .rbxl, .glb, .gltf, .obj, .fbx
+              .rbxm .rbxl .rbxmx .rbxlx .glb .gltf .obj .fbx
             </div>
           </div>
         </div>

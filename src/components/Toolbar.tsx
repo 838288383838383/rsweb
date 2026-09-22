@@ -1,6 +1,7 @@
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { useEditorStore, ToolMode } from '../core/EditorState';
 import { useTheme } from '../themes/ThemeContext';
+import { importFile, getFormatLabel } from '../importers/ImportManager';
 import {
   MousePointer,
   Move,
@@ -14,7 +15,7 @@ import {
   Moon,
   Save,
   FolderOpen,
-  Plus,
+  Upload,
   Grid3x3,
   Layout,
   Zap,
@@ -68,8 +69,31 @@ export function Toolbar() {
     layoutMode,
     setLayoutMode,
     instances,
+    importInstances,
+    addConsoleOutput,
   } = useEditorStore();
   const { theme, toggleTheme } = useTheme();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImport = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    for (const file of Array.from(files)) {
+      try {
+        addConsoleOutput('log', `Importing ${file.name}...`);
+        const result = await importFile(file);
+        const label = getFormatLabel(result.format);
+        addConsoleOutput('log', `Imported ${result.instances.length} instances from ${label}`);
+        importInstances(result.instances, 'workspace');
+        addConsoleOutput('log', `Added to Workspace.`);
+      } catch (error) {
+        addConsoleOutput('error', `Failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
+    }
+
+    e.target.value = '';
+  }, [addConsoleOutput, importInstances]);
 
   const tools: { mode: ToolMode; icon: any; label: string; shortcut: string }[] = [
     { mode: 'select', icon: MousePointer, label: 'Select (Q)', shortcut: 'Q' },
@@ -107,6 +131,12 @@ export function Toolbar() {
       />
 
       <Separator />
+
+      <ToolButton
+        icon={Upload}
+        label="Import File"
+        onClick={() => fileInputRef.current?.click()}
+      />
 
       <ToolButton
         icon={Undo2}
@@ -150,6 +180,15 @@ export function Toolbar() {
         icon={theme === 'dark' ? Moon : Sun}
         label={`Theme: ${theme}`}
         onClick={toggleTheme}
+      />
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        className="hidden"
+        multiple
+        accept=".rbxm,.rbxl,.rbxmx,.rbxlx,.glb,.gltf,.obj,.fbx"
+        onChange={handleImport}
       />
     </div>
   );
