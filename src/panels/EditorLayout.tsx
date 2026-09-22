@@ -1,6 +1,5 @@
 import { useEffect, useCallback } from 'react';
 import { useEditorStore } from '../core/EditorState';
-
 import { HierarchyPanel } from './HierarchyPanel';
 import { InspectorPanel } from './InspectorPanel';
 import { ConsolePanel } from './ConsolePanel';
@@ -8,6 +7,7 @@ import { AssetsPanel } from './AssetsPanel';
 import { SceneRenderer } from '../viewport/SceneRenderer';
 import { Toolbar } from '../components/Toolbar';
 import { FileDropZone } from '../components/FileDropZone';
+import { ScriptPanel } from '../luau/ScriptPanel';
 import { Allotment } from 'allotment';
 import 'allotment/dist/style.css';
 
@@ -55,6 +55,9 @@ export function EditorLayout() {
         } else if ((e.key === 'z' && e.shiftKey) || e.key === 'y') {
           e.preventDefault();
           redo();
+        } else if (e.key === 's') {
+          e.preventDefault();
+          // Trigger save via toolbar
         }
         return;
       }
@@ -119,11 +122,18 @@ export function EditorLayout() {
               </div>
             </div>
             <div className="flex-1 flex flex-col">
-              <div className="flex-1">
-                <SceneRenderer />
+              <div className="flex-1 flex">
+                <div className="flex-1">
+                  <SceneRenderer />
+                </div>
               </div>
-              <div className="h-[150px] border-t border-border-primary">
-                <ConsolePanel />
+              <div className="h-[300px] border-t border-border-primary flex">
+                <div className="flex-1 border-r border-border-primary">
+                  <ScriptPanel />
+                </div>
+                <div className="w-[300px]">
+                  <ConsolePanel />
+                </div>
               </div>
             </div>
             <div className="w-[280px] border-l border-border-primary">
@@ -136,6 +146,7 @@ export function EditorLayout() {
     );
   }
 
+  // VS Code layout
   return (
     <div className="w-full h-full flex flex-col">
       <Toolbar />
@@ -157,8 +168,13 @@ export function EditorLayout() {
                 <div className="flex-1">
                   <SceneRenderer />
                 </div>
-                <div className="h-[150px] border-t border-border-primary">
-                  <ConsolePanel />
+                <div className="h-[300px] border-t border-border-primary flex">
+                  <div className="flex-1 border-r border-border-primary">
+                    <ScriptPanel />
+                  </div>
+                  <div className="w-[300px]">
+                    <ConsolePanel />
+                  </div>
                 </div>
               </div>
             </Allotment.Pane>
